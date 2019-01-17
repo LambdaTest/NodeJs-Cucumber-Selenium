@@ -1,0 +1,24 @@
+{
+  "name": "cucumber-js-lambdatest",
+  "version": "0.1.0",
+  "readme": "Cucumber-JS Integration with [lambdatest](https://www.lambdatest.com)",
+  "description": "Selenium examples for Cucumber-JS and lambdatest Automate",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lambdatest/cucumber-js-lambdatest.git"
+  },
+  "scripts": {
+    "test": "npm run single && npm run local && npm run parallel",
+    "single": "CONFIG_FILE=single ./node_modules/cucumber/bin/cucumber.js features/single.feature",
+    "local": "CONFIG_FILE=local ./node_modules/cucumber/bin/cucumber.js features/local.feature",
+    "parallel": "CONFIG_FILE=parallel ./scripts/cucumber-runner.js features/single.feature"
+  },
+  "devDependencies": {
+    "cucumber": "^1.3.3",
+    "cucumber-assert": "1.0.4",
+    "selenium-webdriver": "^2.53.2"
+  },
+  "dependencies": {
+    "lambdatest-local": "^1.0.0"
+  }
+}
