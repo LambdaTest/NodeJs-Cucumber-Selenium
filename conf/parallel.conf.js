@@ -1,7 +1,7 @@
 exports.config = {
   user: 'YOUR LAMBDATEST USERNAME',
   key: 'YOUR LAMBDATEST ACCESSKEY',
-  server: 'hub.lambdatest.com'
+  server: 'hub.lambdatest.com',
 
   commonCapabilities: {
     name: "parallel_test",
