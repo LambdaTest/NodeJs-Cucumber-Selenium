@@ -6,7 +6,7 @@ exports.config = {
   capabilities: [{
     browserName: 'chrome',
     platform: 'Windows 10',
-    version: '70.0'
+    version: '70.0',
     name: "local_test",
     build: "cucumber-js-LambdaTest"
   }]
