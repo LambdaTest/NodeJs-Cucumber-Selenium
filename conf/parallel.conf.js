@@ -5,7 +5,7 @@ exports.config = {
 
   commonCapabilities: {
     name: "parallel_test",
-    build: "cucumber-js-LambdaTest-parallel"
+    build: "cucumber-js-LambdaTest-parallel",
     'video': true,
     'network': true,
     'console': true,
