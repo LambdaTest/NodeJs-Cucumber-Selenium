@@ -2,6 +2,7 @@ let myStr = process.env.LT_BROWSERS;
 myStr = myStr.replace(/operatingSystem/g, 'platform');
 myStr = myStr.replace(/browserVersion/g, 'version');
 myStr = myStr.replace(/resolution/g, 'screen_resolution');
+console.log(myStr);
 
 const fs = require('fs');
 let jsonData = JSON.parse(myStr);
