@@ -20,7 +20,7 @@ exports.config = {
     'visual': true,
   },
 
-  multiCapabilities: jsonData
+  multiCapabilities: jsonData,
 }
 
 // Code to support common capabilities
