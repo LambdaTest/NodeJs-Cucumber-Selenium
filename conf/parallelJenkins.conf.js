@@ -12,7 +12,7 @@ exports.config = {
   key: process.env.LT_ACCESS_KEY,
   server: 'hub.lambdatest.com',
 
-  capabilities: {
+  commonCapabilities: {
     name: "parallel_test",
     build: "cucumber-js-LambdaTest-parallel",
     'video': true,
@@ -21,7 +21,7 @@ exports.config = {
     'visual': true,
   },
 
-  multiCapabilities: jsonData,
+  capabilities: jsonData,
 }
 
 // Code to support common capabilities
