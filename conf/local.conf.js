@@ -1,6 +1,6 @@
 exports.config = {
-  user: 'YOUR LAMBDATEST USERNAME',
-  key: 'YOUR LAMBDATEST ACCESSKEY',
+  user: '<YOUR LAMBDATEST USERNAME>',
+  key: '<YOUR LAMBDATEST KEY>',
   server: 'hub.lambdatest.com',
 
   capabilities: [{
@@ -8,6 +8,7 @@ exports.config = {
     platform: 'Windows 10',
     version: '70.0',
     name: "local_test",
-    build: "cucumber-js-LambdaTest"
+    build: "cucumber-js-LambdaTest",
+    tunnel: 'true',
   }]
 }

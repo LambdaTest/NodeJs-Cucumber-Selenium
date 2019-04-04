@@ -1,6 +1,6 @@
 exports.config = {
-  user: 'YOUR LAMBDATEST USERNAME',
-  key: 'YOUR LAMBDATEST ACCESSKEY',
+  user: '<YOUR LAMBDATEST USERNAME>',
+  key: '<YOUR LAMBDATEST KEY>',
   server: 'hub.lambdatest.com',
 
   commonCapabilities: {
