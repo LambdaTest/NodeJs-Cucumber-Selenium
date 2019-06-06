@@ -21,6 +21,6 @@
     "selenium-webdriver": "^3.6.0"
   },
   "dependencies": {
-    "@kanhaiyalalsingh/tunnel": "^1.0.4"
+    "@lambdatest/node-tunnel": "^1.0.0"
   }
 }
