@@ -41,7 +41,7 @@ var myHooks = function() {
     var caps = config.capabilities[task_id];
 
     if (caps["tunnel"]) {
-      // Code to start browserstack local before start of test and stop browserstack local after end of test
+      // Code to start LambdaTest Tunnel before start of test and stop LambdaTest Tunnel after end of test
 
       myTunnel.start(tunnelArguments, function(e, status) {
         if (e) return console.log(e);
