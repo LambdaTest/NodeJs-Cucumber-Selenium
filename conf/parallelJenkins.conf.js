@@ -13,12 +13,8 @@ exports.config = {
   server: 'hub.lambdatest.com',
 
   commonCapabilities: {
-    name: "parallel_test",
+    name: "parallel_cucumber-js-LambdaTest-parallel-tests",
     build: "cucumber-js-LambdaTest-parallel",
-    'video': true,
-    'network': true,
-    'console': true,
-    'visual': true,
   },
 
   capabilities: jsonData,

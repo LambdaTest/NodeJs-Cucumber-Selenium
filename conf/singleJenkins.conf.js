@@ -7,11 +7,7 @@ exports.config = {
     browserName: process.env.LT_BROWSER_NAME,
     platform: process.env.LT_PLATFORM,
     version: process.env.LT_BROWSER_VERSION,
-    name: "single_test",
-    build: "cucumber-js-LambdaTest-single",
-    'video': true,
-    'network': true,
-    'console': true,
-    'visual': true,
+    name: "cucumber-js-single-test",
+    build: "cucumber-js-LambdaTest-single"
   }]
 }
