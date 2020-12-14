@@ -6,12 +6,8 @@ exports.config = {
   capabilities: [{
     browserName: 'chrome',
     platform: 'Windows 10',
-    version: '70.0',
-    name: "single_test",
-    build: "cucumber-js-LambdaTest-single",
-    'video': true,
-    'network': true,
-    'console': true,
-    'visual': true,
+    version: 'latest',
+    name: "cucumber-js-single-test",
+    build: "cucumber-js-LambdaTest-single"
   }]
 }

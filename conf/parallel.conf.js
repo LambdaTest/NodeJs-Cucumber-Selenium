@@ -4,30 +4,26 @@ exports.config = {
   server: 'hub.lambdatest.com',
 
   commonCapabilities: {
-    name: "parallel_test",
+    name: "cucumber-js-LambdaTest-parallel-tests",
     build: "cucumber-js-LambdaTest-parallel",
-    'video': true,
-    'network': true,
-    'console': true,
-    'visual': true,
   },
 
   capabilities: [{
     browserName: 'chrome',
     platform: 'Windows 10',
-    version: '70.0'
+    version: 'latest'
   },{
     browserName: 'firefox',
     platform: 'Windows 10',
-    version: '63.0'
+    version: 'latest'
   },{
     browserName: 'safari',
     platform: 'macOS 10.13',
-    version: '11.1'
+    version: 'latest'
   },{
     browserName: 'internet explorer',
     platform: 'Windows 10',
-    version: '10.0'
+    version: 'latest'
   }]
 }
 
