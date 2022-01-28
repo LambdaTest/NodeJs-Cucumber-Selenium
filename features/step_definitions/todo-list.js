@@ -22,7 +22,6 @@ module.exports = function() {
     this.driver
       .findElement({ id: "sampletodotext" })
       .sendKeys(newItemName + "\n")
-      .then(next);
     this.driver
       .findElement({ id: "addbutton" })
       .click()
