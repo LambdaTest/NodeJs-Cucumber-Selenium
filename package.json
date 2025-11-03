@@ -1,6 +1,7 @@
 {
   "name": "cucumber-js-lambdatest",
   "version": "0.1.0",
+  "type": "module",
   "readme": "Cucumber-JS Integration with [lambdatest](https://www.lambdatest.com)",
   "description": "Selenium examples for Cucumber-JS and lambdatest Automate",
   "repository": {
@@ -9,19 +10,20 @@
   },
   "scripts": {
     "test": "npm run single && npm run local && npm run parallel",
-    "single": "cross-env CONFIG_FILE=single ./node_modules/cucumber/bin/cucumber.js features/single.feature",
-    "local": "cross-env CONFIG_FILE=local ./node_modules/cucumber/bin/cucumber.js features/local.feature",
+    "single": "cross-env CONFIG_FILE=single ./node_modules/@cucumber/cucumber/bin/cucumber.js features/single.feature",
+    "local": "cross-env CONFIG_FILE=local ./node_modules/@cucumber/cucumber/bin/cucumber.js features/local.feature",
     "parallel": "cross-env CONFIG_FILE=parallel ./scripts/cucumber-runner.js features/single.feature",
     "parallelJenkins": "cross-env CONFIG_FILE=parallelJenkins ./scripts/cucumber-runner.js features/single.feature",
     "singleJenkins": "cross-env CONFIG_FILE=singleJenkins ./scripts/cucumber-runner.js features/single.feature"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "cucumber": "^1.3.3",
+    "cross-env": "^10.1.0",
+    "@cucumber/cucumber": "^12.2.0",
     "cucumber-assert": "1.0.4",
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "^4.38.0"
   },
   "dependencies": {
-    "@lambdatest/node-tunnel": "^2.0.2"
+    "@lambdatest/node-tunnel": "^4.0.9"
   }
+
 }

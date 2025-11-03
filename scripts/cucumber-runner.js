@@ -1,15 +1,26 @@
 #!/usr/bin/env node
-var child_process = require("child_process");
-var config_file =
-  "../conf/" + (process.env.CONFIG_FILE || "single") + ".conf.js";
-var config = require(config_file).config;
+import { spawn } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-process.argv[0] = "node";
-process.argv[1] = "./node_modules/.bin/cucumber-js";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-for (var i in config.capabilities) {
-  var env = Object.create(process.env);
-  env.TASK_ID = i.toString();
-  var p = child_process.spawn("/usr/bin/env", process.argv, { env: env });
-  p.stdout.pipe(process.stdout);
+const configFile = path.resolve(
+  __dirname,
+  `../conf/${process.env.CONFIG_FILE || 'single'}.conf.js`
+);
+
+// Dynamically import the config file
+const { config } = await import(configFile);
+
+process.argv[0] = 'node';
+process.argv[1] = './node_modules/.bin/cucumber-js';
+
+for (let i = 0; i < config.capabilities.length; i++) {
+  const env = { ...process.env, TASK_ID: i.toString() };
+  const child = spawn('/usr/bin/env', process.argv, { env });
+
+  child.stdout.pipe(process.stdout);
+  child.stderr.pipe(process.stderr);
 }
