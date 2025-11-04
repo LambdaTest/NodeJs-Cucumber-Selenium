@@ -1,73 +1,75 @@
-"use strict";
+import { Before, After } from '@cucumber/cucumber';
+import { Builder } from 'selenium-webdriver';
+import lambdaTunnel from '@lambdatest/node-tunnel';
+import path from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
 
-const webdriver = require("selenium-webdriver");
-const lambdaTunnel = require("@lambdatest/node-tunnel");
+// --- Resolve config file dynamically ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const config_file =
-  "../../conf/" + (process.env.CONFIG_FILE || "single") + ".conf.js";
-const config = require(config_file).config;
-const tunnelArguments = { user: config.user, key: config.key };
+const configPath = path.resolve(
+  __dirname,
+  `../../conf/${process.env.CONFIG_FILE || 'single'}.conf.js`
+);
 
+// Use top-level await to import config cleanly as ESM
+const { config } = await import(pathToFileURL(configPath).href);
+
+const tunnelArgs = { user: config.user, key: config.key };
 const myTunnel = new lambdaTunnel();
 
-var createLambdaTestSession = function(config, caps) {
-  console.log(
-    "https://" +
-      config.user +
-      ":" +
-      config.key +
-      "@" +
-      config.server +
-      "/wd/hub"
-  );
-  return new webdriver.Builder()
-    .usingServer(
-      "https://" +
-        config.user +
-        ":" +
-        config.key +
-        "@" +
-        config.server +
-        "/wd/hub"
-    )
-    .withCapabilities(caps)
-    .build();
-};
+// --- Helper: create LambdaTest session ---
+async function createLambdaTestSession(config, caps) {
+  const gridUrl = `https://${config.user}:${config.key}@${config.server}/wd/hub`;
+  console.log(`Connecting to: ${gridUrl}`);
 
-var myHooks = function() {
-  this.Before(function(scenario, callback) {
-    var world = this;
-    var task_id = parseInt(process.env.TASK_ID || 0);
-    var caps = config.capabilities[task_id];
+  return new Builder().usingServer(gridUrl).withCapabilities(caps).build();
+}
 
-    if (caps["tunnel"]) {
-      // Code to start LambdaTest Tunnel before start of test and stop LambdaTest Tunnel after end of test
+// --- Hooks ---
+Before({ timeout: 100000 }, async function () {
+  const taskId = parseInt(process.env.TASK_ID || '0', 10);
+  const caps = config.capabilities[taskId];
 
-      myTunnel.start(tunnelArguments, function(e, status) {
-        if (e) return console.log(e);
-        console.log("Started Tunnel " + status);
-        console.log(
-          "TUNNELLLLL" + caps["tunnel"] + caps["browserName"] + caps["build"]
-        );
-        world.driver = createLambdaTestSession(config, caps);
-        callback();
+  if (caps.tunnel) {
+    console.log(
+      `Starting LambdaTest Tunnel for ${caps.browserName} | Build: ${caps.build}`
+    );
+
+    await new Promise((resolve, reject) => {
+      myTunnel.start(tunnelArgs, (err, status) => {
+        if (err) {
+          console.error('Tunnel failed to start:', err);
+          return reject(err);
+        }
+        console.log('Tunnel started:', status);
+        resolve(status);
       });
-    } else {
-      world.driver = createLambdaTestSession(config, caps);
-      callback();
-    }
-  });
-
-  console.log("TUNNEL STATUS" + myTunnel.isRunning());
-  this.After(function(scenario, callback) {
-    console.log("Started Tunnel AFTER " + myTunnel.isRunning());
-    this.driver.quit().then(function() {
-      if (myTunnel) {
-        myTunnel.stop(callback);
-      }
-      callback();
     });
-  });
-};
+  }
 
-module.exports = myHooks;
+  console.log('TUNNEL STATUS (Before):', myTunnel.isRunning());
+  this.driver = await createLambdaTestSession(config, caps);
+});
+
+After({ timeout: 100000 }, async function () {
+  console.log('TUNNEL STATUS (After):', myTunnel.isRunning());
+
+  if (this.driver) {
+    try {
+      await this.driver.quit();
+    } catch (e) {
+      console.error('Error quitting driver:', e);
+    }
+  }
+
+  if (myTunnel.isRunning()) {
+    await new Promise((resolve) => {
+      myTunnel.stop(() => {
+        console.log('Tunnel stopped successfully.');
+        resolve();
+      });
+    });
+  }
+});

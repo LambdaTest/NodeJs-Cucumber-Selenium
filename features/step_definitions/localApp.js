@@ -1,49 +1,33 @@
-"use strict";
+import { When, Then } from '@cucumber/cucumber';
+import assert from 'assert';
 
-var assert = require("cucumber-assert");
+When('I click on first item on local app', async function () {
+  await this.driver.get('https://lambdatest.github.io/sample-todo-app/');
+  const firstItem = await this.driver.findElement({ name: 'li1' });
+  await firstItem.click();
+});
 
-module.exports = function() {
-  this.When(/^I click on first item on local app$/, function(next) {
-    this.driver.get("https://lambdatest.github.io/sample-todo-app/");
-    this.driver
-      .findElement({ name: "li1" })
-      .click()
-      .then(next);
+When('I click on second item on local app', async function () {
+  const secondItem = await this.driver.findElement({ name: 'li2' });
+  await secondItem.click();
+});
+
+When('I add new item {string} on local app', async function (newItemName) {
+  const inputBox = await this.driver.findElement({ id: 'sampletodotext' });
+  await inputBox.sendKeys(`${newItemName}\n`);
+  const addButton = await this.driver.findElement({ id: 'addbutton' });
+  await addButton.click();
+});
+
+Then('I should see new item in list {string} on local app', async function (item) {
+  const newItem = await this.driver.findElement({
+    xpath: '//html/body/div/div/div/ul/li[last()]/span'
   });
-
-  this.When(/^I click on second item on local app$/, function(next) {
-    this.driver
-      .findElement({ name: "li2" })
-      .click()
-      .then(next);
-  });
-
-  this.When(/^I add new item "([^"]*)" on local app$/, function(
-    newItemName,
-    next
-  ) {
-    var self = this;
-    this.driver
-      .findElement({ id: "sampletodotext" })
-      .sendKeys(newItemName + "\n")
-      .then(next);
-    this.driver
-      .findElement({ id: "addbutton" })
-      .click()
-      .then(next);
-  });
-
-  this.Then(/^I should see new item in list "([^"]*)" on local app$/, function(
-    item,
-    next
-  ) {
-    var self = this;
-    this.driver
-      .findElement({ xpath: "//html/body/div/div/div/ul/li[6]/span" })
-      .getText()
-      .then(function(text) {
-        console.log(text);
-        assert.equal(text, item, next, "Expected title to be " + item);
-      });
-  });
-};
+  const text = (await newItem.getText()).trim();
+  console.log('Local new item text:', text);
+  assert.strictEqual(
+    text,
+    item.trim(),
+    `Expected title to be "${item.trim()}", but got "${text}"`
+  );
+});
