@@ -2,7 +2,7 @@ import { When, Then } from '@cucumber/cucumber';
 import assert from 'assert';
 
 When('I click on first item on local app', async function () {
-  await this.driver.get('https://lambdatest.github.io/sample-todo-app/');
+  await this.driver.get('https://www.testmuai.com/selenium-playground/todo-app/');
   const firstItem = await this.driver.findElement({ name: 'li1' });
   await firstItem.click();
 });
@@ -21,7 +21,7 @@ When('I add new item {string} on local app', async function (newItemName) {
 
 Then('I should see new item in list {string} on local app', async function (item) {
   const newItem = await this.driver.findElement({
-    xpath: '//html/body/div/div/div/ul/li[last()]/span'
+    xpath: "//li[contains(@class,'todo-item')][last()]/span"
   });
   const text = (await newItem.getText()).trim();
   console.log('Local new item text:', text);
