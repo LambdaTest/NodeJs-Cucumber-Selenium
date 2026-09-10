@@ -13,7 +13,7 @@
 With TestMu AI (Formerly LambdaTest), you can run Cucumber BDD tests with Selenium in Node.js across real browsers and operating systems. This sample shows how to configure Node.js Cucumber Selenium tests to run on the TestMu AI cloud.
 
 - [Sign up on TestMu AI](https://www.testmuai.com/register/) (Formerly LambdaTest).
-- Follow the [TestMu AI Documentation](https://www.testmuai.com/support/docs/cucumberjs-with-selenium-running-cucumberjs-automation-scripts-on-testmu-selenium-grid/) for the full setup walkthrough.
+- Follow the [Run CucumberJS tests with Selenium on TestMu AI](https://www.testmuai.com/support/docs/cucumberjs-with-selenium-running-cucumberjs-automation-scripts-on-testmu-selenium-grid/) for the full setup walkthrough.
 
 ### Prerequisites
 
